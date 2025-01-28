@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm , AuthenticationForm , UsernameField
+from django.contrib.auth.forms import UserCreationForm , AuthenticationForm , UsernameField 
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _  
 from .models import Post
@@ -38,3 +38,14 @@ class PostForm(forms.ModelForm):
             post.save()
         return post
 
+class ContactForm(forms.Form):
+    name = forms.CharField(max_length=100 , disabled=True)
+    email = forms.EmailField(disabled=True)
+    message = forms.CharField(widget=forms.Textarea)
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+        if user:
+            self.fields['name'].initial = user.get_full_name()  # Set full name
+            self.fields['email'].initial = user.email  # Set email

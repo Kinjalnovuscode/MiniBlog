@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponseRedirect
-from .forms import SignupForm, loginform ,PostForm
+from .forms import SignupForm, loginform ,PostForm , ContactForm
 from django.contrib.auth import authenticate, login, logout 
 from django.contrib import messages
 from .models import Post
@@ -14,7 +14,22 @@ def about(request):
     return render(request, 'about.html')
 
 def contact(request):
-    return render(request, 'contact.html')
+    print(request.user)  # To check if the user is logged in
+    if request.user.is_authenticated:
+        user = request.user
+    else:
+        user = None
+    
+    if request.method == 'POST':
+        form = ContactForm(request.POST, user=user)  # Pass the logged-in user
+        if form.is_valid():
+            # Handle the form submission (send email, store data, etc.)
+            pass
+    else:
+        form = ContactForm(user=user)  # Pass the logged-in user to initialize the form
+    
+    return render(request, 'contact.html', {'form': form})
+    #return render(request, 'contact.html')
 
 def dashboard(request):
     if request.user.is_authenticated:

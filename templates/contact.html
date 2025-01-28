@@ -3,30 +3,25 @@
 {% block content %}
 
 <div class="col-sm-10">
-    <h3 class="text-white my-5"> Contact PAGE </h3>
-    <form>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="inputname">Name</label>
-                <input type="text" class="form-control" id="inputname">
-            </div>
-            <div class="form-group col-md-6">
-                <label for="inputemail">Email</label>
-                <input type="email" class="form-control" id="inputemail">
-            </div>
-        </div>
+    <h3 class="text-white my-5">Contact PAGE</h3>
+    <form method="post">
+        {% csrf_token %}
         <div class="form-row">
             <div class="form-group">
-                <label for="inputaddress">Address</label>
-                <input type="text" class="form-control" id="inputaddress">
+                <label for="inputname">Name</label>
+                <input type="text" class="form-control" id="inputname" name="name" value="{{ form.name.value|default_if_none:'' }}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="inputemail">Email</label>
+                <input type="email" class="form-control" id="inputemail" name="email" value="{{ form.email.value|default_if_none:'' }}" readonly>
             </div>
         </div>
         <div class="form-row">
             <div class="form-group">
                 <label for="message">Message</label>
-                <textarea class="form-control" id="message" rows="3"></textarea>
+                <textarea class="form-control" id="message" rows="3" name="message">{{ form.message.value|default_if_none:'' }}</textarea>
             </div>
-        </div>
+        </div><br>
         <button type="submit" class="btn btn-primary">Send</button>
     </form>
 </div>
