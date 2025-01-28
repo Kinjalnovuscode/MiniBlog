@@ -73,7 +73,6 @@ def add_post(request):
         if request.method == 'POST':
             form = PostForm(request.POST)
             if form.is_valid():
-                print("//////////")
                 print(request.user.id)
                 # Pass the logged-in user to the save method
                 form.save(user=request.user)  # This ensures that the user_id gets saved
