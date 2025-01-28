@@ -22,4 +22,3 @@ def save(self, *args, **kwargs):
 def get_default_user():
     # Replace '1' with the ID of your desired default user
     return User.objects.first().id if User.objects.exists() else 1
-
